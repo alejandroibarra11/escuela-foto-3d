@@ -1,0 +1,91 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene id="scene">
+      <a-sky src="static/imagen-afuera.jpg"></a-sky>
+      
+      <!-- Esfera con hipervínculo -->
+      <a-sphere position="0 -1 -5" radius="1.25" color="#EF2D5E"
+                onclick="window.location.href='https://example.com'">
+      </a-sphere>
+      
+      <!-- Cámara con cursor para interacción -->
+      <a-entity camera look-controls>
+        <a-cursor></a-cursor>
+      </a-entity>
+    </a-scene>
+    <script>
+
+      function generateBox(
+        x = '',
+        y = '',
+        z = '',
+        extra,
+      ) {
+        const el = document.createElement('a-box');
+        el.setAttribute('position', `${x} ${y} ${z}`)
+        el.setAttribute('rotation', '0 0 0');
+        el.setAttribute('color', "#EF2D5E")
+        const scene = document.getElementById('scene');
+        scene.appendChild(el);
+      }
+  
+      // const gap = 0.5;
+      // for (let i = 0; i <= 10; i++) {
+      // generateBox(((i-1) + gap * i).toString(), '0.5', '-3')
+  
+      // }
+  
+      function buildWall(height, width, {
+        typeStart,
+        startAt,
+        initial
+      }) {
+        let start = 0;
+        while (height > start) {
+          for (let i = initial; i <= width + initial; i++) {
+            if (typeStart === '3d') {
+              generateBox(startAt, start, i);
+            }
+  
+            if (typeStart === '2d') {
+              generateBox(i, start, startAt);
+            }
+          }
+          start++;
+  
+        }
+  
+      }
+  // 
+      const size = 5;
+    buildWall(size,size, {
+        typeStart: '3d',
+        startAt: '2',
+        initial: 0
+      })
+  
+      buildWall(size,size, {
+        typeStart: '2d',
+        startAt: '6',
+        initial: 2
+      })
+  
+      buildWall(size,size, {
+        typeStart: '2d',
+        startAt: '0',
+        initial: 2
+      })
+  
+      buildWall(size,size, {
+        typeStart: '3d',
+        startAt: '7',
+        initial: 0
+      })
+  
+    </script>
+  </body>
+
+</html>
